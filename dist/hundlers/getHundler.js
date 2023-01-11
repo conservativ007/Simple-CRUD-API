@@ -15,7 +15,6 @@ function getHundler(req, res) {
     }
 }
 exports.getHundler = getHundler;
-// export function getUserById(id: string, res) {
 function getUserById(req, res) {
     let userId = (0, checkCorrectLengthOfUserId_1.checkCorrectLengthOfUserId)(req, res);
     if (userId === undefined)

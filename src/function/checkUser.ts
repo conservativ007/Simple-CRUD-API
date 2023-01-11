@@ -1,6 +1,6 @@
 import { users } from "../users";
 
-export function checkUser(res, userId) {
+export function checkUser(res, userId: string) {
   let user = users.find((user) => user.id === userId);
 
   if (user === undefined) {

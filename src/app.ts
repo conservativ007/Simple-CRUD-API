@@ -1,7 +1,9 @@
 import http from "http";
 import { checkMethod } from "./function/checkMethod";
+import * as dotenv from "dotenv";
 
 const server = http.createServer();
+const { PORT } = dotenv.config().parsed;
 
 // server.on("connection", (connection) => {
 //   console.log("someone just connected");
@@ -15,6 +17,6 @@ server.on("clientError", (err, socket) => {
   socket.end("HTTP/1.1 400 Bad Request\r\n\r\n");
 });
 
-server.listen(3000, () => {
-  console.log(`listening for requests on port 3000`);
+server.listen(PORT || 3000, () => {
+  console.log(`listening for requests on port ${PORT}`);
 });

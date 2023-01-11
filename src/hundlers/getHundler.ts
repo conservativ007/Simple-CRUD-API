@@ -2,7 +2,7 @@ import { checkCorrectLengthOfUserId } from "../function/checkCorrectLengthOfUser
 import { checkUser } from "../function/checkUser";
 import { users } from "../users";
 
-export function getHundler(req, res) {
+export function getHundler(req, res): void {
   const { url } = req;
   if (url.startsWith("/api/users/")) {
     return getUserById(req, res);
@@ -13,8 +13,7 @@ export function getHundler(req, res) {
   }
 }
 
-// export function getUserById(id: string, res) {
-export function getUserById(req, res) {
+export function getUserById(req, res): void {
   let userId = checkCorrectLengthOfUserId(req, res);
   if (userId === undefined) return;
 

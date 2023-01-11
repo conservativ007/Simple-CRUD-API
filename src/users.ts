@@ -1,8 +1,10 @@
+import { User } from "./types/types";
+
 export let users = [];
 
 export const changeUsers = {
-  putUser: (id, data) => {
-    let newStore = users.map((user) => {
+  putUser: (id: string, data: User): void => {
+    let newStore = users.map((user: User) => {
       if (user.id === id) {
         return {
           ...user,
@@ -15,7 +17,7 @@ export const changeUsers = {
     users = newStore;
   },
 
-  deleteUser: (id) => {
+  deleteUser: (id: string): void => {
     const userIndex = users.findIndex((user) => user.id === id);
     users.splice(userIndex, 1);
   },

@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { users } from "../users";
 
-export function postHundler(req, res) {
+export function postHundler(req, res): void {
   req.on("error", (err) => {
     console.error(err);
   });

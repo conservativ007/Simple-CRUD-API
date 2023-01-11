@@ -6,6 +6,10 @@ const getHundler_1 = require("../hundlers/getHundler");
 const postHundler_1 = require("../hundlers/postHundler");
 const putHundler_1 = require("../hundlers/putHundler");
 function checkMethod(req, res) {
+    if (req.url.startsWith("/api/users") !== true) {
+        res.statusCode = 404;
+        res.end("you must enter valid url string");
+    }
     if (req.method === "GET")
         return (0, getHundler_1.getHundler)(req, res);
     if (req.method === "POST")
