@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
+import { checkPostBody } from "../function/checkPostBody";
 import { users } from "../users";
 
 export function postHundler(req, res): void {
@@ -8,12 +8,10 @@ export function postHundler(req, res): void {
 
   req
     .on("data", (chunk) => {
-      let user = {
-        id: uuidv4(),
-        ...JSON.parse(chunk),
-      };
+      // console.log("chunk", JSON.parse(chunk));
+      let isCorrectUser = checkPostBody(chunk, res);
 
-      users.push(user);
+      if (isCorrectUser !== false) users.push(isCorrectUser);
     })
     .on("end", () => {
       res.on("error", (err) => {

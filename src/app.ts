@@ -2,7 +2,7 @@ import http from "http";
 import { checkMethod } from "./function/checkMethod";
 import * as dotenv from "dotenv";
 
-const server = http.createServer();
+export const server = http.createServer();
 const { PORT } = dotenv.config().parsed;
 
 // server.on("connection", (connection) => {

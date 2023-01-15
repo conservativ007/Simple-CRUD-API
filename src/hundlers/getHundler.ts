@@ -1,5 +1,6 @@
 import { checkCorrectLengthOfUserId } from "../function/checkCorrectLengthOfUserId";
 import { checkUser } from "../function/checkUser";
+import { User } from "../types/types";
 import { users } from "../users";
 
 export function getHundler(req, res): void {
@@ -10,14 +11,16 @@ export function getHundler(req, res): void {
   if (url.startsWith("/api/users")) {
     res.statusCode = 200;
     res.end(JSON.stringify(users));
+
+    // console.log("from server", users);
   }
 }
 
 export function getUserById(req, res): void {
-  let userId = checkCorrectLengthOfUserId(req, res);
+  let userId: undefined | string = checkCorrectLengthOfUserId(req, res);
   if (userId === undefined) return;
 
-  let user = checkUser(res, userId);
+  let user: undefined | User = checkUser(res, userId);
   if (user === undefined) return;
 
   res.statusCode = 200;
