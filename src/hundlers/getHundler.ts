@@ -23,6 +23,7 @@ export function getUserById(req, res): void {
   if (user === undefined) return;
 
   res.statusCode = 200;
+  res.setHeader('Content-Type', 'application/json');
 
   res.end(JSON.stringify(user));
 }

@@ -9,6 +9,8 @@ server.on('request', (req, res) => {
   checkMethod(req, res);
 });
 
+console.log(123);
+
 server.listen(PORT || 3000, () => {
   console.log(`listening for requests on port ${PORT}`);
 });

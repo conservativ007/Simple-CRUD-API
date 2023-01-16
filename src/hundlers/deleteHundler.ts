@@ -1,7 +1,7 @@
-import { checkCorrectLengthOfUserId } from "../function/checkCorrectLengthOfUserId";
-import { checkUser } from "../function/checkUser";
-import { User } from "../types/types";
-import { changeUsers } from "../users";
+import { checkCorrectLengthOfUserId } from '../function/checkCorrectLengthOfUserId';
+import { checkUser } from '../function/checkUser';
+import { User } from '../types/types';
+import { changeUsers } from '../users';
 
 export function deleteHundler(req, res) {
   let userId: undefined | string = checkCorrectLengthOfUserId(req, res);
@@ -12,5 +12,6 @@ export function deleteHundler(req, res) {
 
   changeUsers.deleteUser(userId);
   res.statusCode = 204;
-  res.end("user was found and deleted");
+  res.setHeader('user', 'user was successfully deleted');
+  res.end('user was found and deleted');
 }

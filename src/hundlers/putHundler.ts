@@ -1,7 +1,7 @@
-import { checkCorrectLengthOfUserId } from "../function/checkCorrectLengthOfUserId";
-import { checkUser } from "../function/checkUser";
-import { User } from "../types/types";
-import { changeUsers } from "../users";
+import { checkCorrectLengthOfUserId } from '../function/checkCorrectLengthOfUserId';
+import { checkUser } from '../function/checkUser';
+import { User } from '../types/types';
+import { changeUsers } from '../users';
 
 export function putHundler(req, res) {
   let userId: undefined | string = checkCorrectLengthOfUserId(req, res);
@@ -11,7 +11,7 @@ export function putHundler(req, res) {
     let user: undefined | User = checkUser(res, userId);
     if (user === undefined) return;
 
-    req.on("data", (chunk) => {
+    req.on('data', (chunk) => {
       let newDataOfUser = JSON.parse(chunk);
       changeUsers.putUser(userId, newDataOfUser);
 
@@ -21,6 +21,7 @@ export function putHundler(req, res) {
       };
 
       res.statusCode = 200;
+      res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(user));
     });
   }
