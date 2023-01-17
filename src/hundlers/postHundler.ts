@@ -1,5 +1,6 @@
 import { checkPostBody } from '../function/checkPostBody';
-import { users } from '../users';
+import { responseSuccessfulAnswer } from '../function/responseAnswer';
+import { userService } from '../users';
 
 export function postHundler(req, res): void {
   req.on('error', (err) => {
@@ -10,15 +11,13 @@ export function postHundler(req, res): void {
     .on('data', (chunk) => {
       let isCorrectUser = checkPostBody(chunk, res);
 
-      if (isCorrectUser !== false) users.push(isCorrectUser);
+      if (isCorrectUser !== false) userService.addUser(isCorrectUser);
     })
     .on('end', () => {
       res.on('error', (err) => {
         console.error(err);
       });
 
-      res.statusCode = 201;
-      res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify(users[users.length - 1]));
+      responseSuccessfulAnswer(res, 201, userService.getLastUser());
     });
 }

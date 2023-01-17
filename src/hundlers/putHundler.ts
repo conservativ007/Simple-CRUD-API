@@ -1,28 +1,21 @@
 import { checkCorrectLengthOfUserId } from '../function/checkCorrectLengthOfUserId';
-import { checkUser } from '../function/checkUser';
+import { responseSuccessfulAnswer } from '../function/responseAnswer';
 import { User } from '../types/types';
-import { changeUsers } from '../users';
+import { userService } from '../users';
 
 export function putHundler(req, res) {
   let userId: undefined | string = checkCorrectLengthOfUserId(req, res);
   if (userId === undefined) return;
 
   if (userId.length === 36) {
-    let user: undefined | User = checkUser(res, userId);
+    let user: undefined | User = userService.getOneUser(res, userId);
     if (user === undefined) return;
 
     req.on('data', (chunk) => {
       let newDataOfUser = JSON.parse(chunk);
-      changeUsers.putUser(userId, newDataOfUser);
+      let changedUser = userService.putUser(userId, newDataOfUser);
 
-      let user: User = {
-        userId,
-        ...newDataOfUser,
-      };
-
-      res.statusCode = 200;
-      res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify(user));
+      responseSuccessfulAnswer(res, 200, changedUser);
     });
   }
 }

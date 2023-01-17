@@ -1,29 +1,31 @@
 import { checkCorrectLengthOfUserId } from '../function/checkCorrectLengthOfUserId';
-import { checkUser } from '../function/checkUser';
+import {
+  responseNotfoundAnswer,
+  responseSuccessfulAnswer,
+} from '../function/responseAnswer';
 import { User } from '../types/types';
-import { users } from '../users';
+import { userService } from '../users';
 
 export function getHundler(req, res): void {
   const { url } = req;
-  if (url.startsWith('/api/users/')) {
+
+  let lastSlashIndexOfUrl = url.lastIndexOf('/');
+
+  if (url.startsWith('/api/users/') && lastSlashIndexOfUrl === 10) {
     return getUserById(req, res);
   }
-  if (url.startsWith('/api/users')) {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(users));
+  if (url === '/api/users') {
+    responseSuccessfulAnswer(res, 200, userService.getAllUsers());
+    return;
   }
+  responseNotfoundAnswer(res, 'You must eneter valid url');
 }
 
 export function getUserById(req, res): void {
   let isCorretUserId: undefined | string = checkCorrectLengthOfUserId(req, res);
   if (isCorretUserId === undefined) return;
 
-  let user: undefined | User = checkUser(res, isCorretUserId);
+  let user: undefined | User = userService.getOneUser(res, isCorretUserId);
   if (user === undefined) return;
-
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'application/json');
-
-  res.end(JSON.stringify(user));
+  responseSuccessfulAnswer(res, 200, user);
 }

@@ -1,17 +1,15 @@
 import { checkCorrectLengthOfUserId } from '../function/checkCorrectLengthOfUserId';
-import { checkUser } from '../function/checkUser';
+import { responseDeleteAnswer } from '../function/responseAnswer';
 import { User } from '../types/types';
-import { changeUsers } from '../users';
+import { userService } from '../users';
 
 export function deleteHundler(req, res) {
   let userId: undefined | string = checkCorrectLengthOfUserId(req, res);
   if (userId === undefined) return;
 
-  let user: undefined | User = checkUser(res, userId);
+  let user: undefined | User = userService.getOneUser(res, userId);
   if (user === undefined) return;
 
-  changeUsers.deleteUser(userId);
-  res.statusCode = 204;
-  res.setHeader('user', 'user was successfully deleted');
-  res.end('user was found and deleted');
+  userService.deleteUser(userId);
+  responseDeleteAnswer(res, 'user was found and deleted');
 }
